@@ -22,6 +22,11 @@ jobs:
         run: npm ci
 
       - name: Run Postman tests (Newman)
+        env:
+          POSTMAN_COLLECTION_NAME: ${{ secrets.POSTMAN_COLLECTION_NAME }}
+          POSTMAN_EXPORT_PATH: ${{ secrets.POSTMAN_EXPORT_PATH }}
+          REPORT_DIR: ${{ secrets.REPORT_DIR }}
+
         run: npm run pm:test
 
       - name: Upload Newman report
