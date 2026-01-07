@@ -1,0 +1,2995 @@
+{
+  "info": {
+    "_postman_id": "e329ab85-2894-4d1b-b8e8-51b20ba55443",
+    "name": "BookstoreAPI",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "createdAt": "2026-01-06T13:43:16.000Z",
+    "updatedAt": "2026-01-07T10:24:43.000Z",
+    "lastUpdatedBy": "31090462",
+    "uid": "31090462-e329ab85-2894-4d1b-b8e8-51b20ba55443"
+  },
+  "item": [
+    {
+      "name": "authors",
+      "item": [
+        {
+          "name": "read authors",
+          "item": [
+            {
+              "name": "read all authors",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "86c8a856-c031-4e3b-9070-8dfa0bf0583d",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response in JSON format\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseData = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return response as an array\", function () {",
+                      "    pm.expect(responseData).to.be.an('array');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return non-empty array\", function () {",
+                      "    pm.expect(responseData).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should have required fields for each author\", function () {",
+                      "    responseData.forEach(author => {",
+                      "        pm.expect(author).to.have.property('id');",
+                      "        pm.expect(author).to.have.property('firstName');",
+                      "        pm.expect(author).to.have.property('lastName');",
+                      "    });",
+                      "});",
+                      "",
+                      "pm.test(\"Should have author IDs of type number\", function () {",
+                      "    responseData.forEach(author => {",
+                      "        pm.expect(author.id).to.be.a('number');",
+                      "    });",
+                      "});",
+                      "",
+                      "pm.test(\"Should have firstName and lastName of type string\", function () {",
+                      "    responseData.forEach(author => {",
+                      "        pm.expect(author.firstName).to.be.a('string');",
+                      "        pm.expect(author.lastName).to.be.a('string');",
+                      "    });",
+                      "});",
+                      "",
+                      "pm.test(\"Should have unique IDs for all authors\", function () {",
+                      "    const ids = responseData.map(author => author.id);",
+                      "    const uniqueIds = [...new Set(ids)];",
+                      "    pm.expect(ids.length).to.equal(uniqueIds.length);",
+                      "});",
+                      "",
+                      "pm.test(\"Should have non-empty firstName and lastName\", function () {",
+                      "    responseData.forEach(author => {",
+                      "        pm.expect(author.firstName).to.not.be.empty;",
+                      "        pm.expect(author.lastName).to.not.be.empty;",
+                      "    });",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 1000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test(\"Should have Content-Type header containing application/json\", function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "});",
+                      "",
+                      "pm.test(\"Should have object structure with no extra fields\", function () {",
+                      "    responseData.forEach(author => {",
+                      "        const keys = Object.keys(author);",
+                      "        pm.expect(keys).to.have.lengthOf(3);",
+                      "        pm.expect(keys).to.include.members(['id', 'firstName', 'lastName']);",
+                      "    });",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "a36fb442-72e3-49db-a646-5f8b5734059a",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T13:45:52.000Z",
+              "updatedAt": "2026-01-06T15:46:38.000Z",
+              "uid": "31090462-a36fb442-72e3-49db-a646-5f8b5734059a"
+            },
+            {
+              "name": "read author by id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "86c8a856-c031-4e3b-9070-8dfa0bf0583d",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response in JSON format\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseData = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return response as an object\", function () {",
+                      "    pm.expect(responseData).to.be.an('object');",
+                      "});",
+                      "",
+                      "pm.test(\"Should not return an array\", function () {",
+                      "    pm.expect(responseData).to.not.be.an('array');",
+                      "});",
+                      "",
+                      "pm.test(\"Should have required fields\", function () {",
+                      "    pm.expect(responseData).to.have.property('id');",
+                      "    pm.expect(responseData).to.have.property('firstName');",
+                      "    pm.expect(responseData).to.have.property('lastName');",
+                      "});",
+                      "",
+                      "pm.test(\"Should have id of type number\", function () {",
+                      "    pm.expect(responseData.id).to.be.a('number');",
+                      "});",
+                      "",
+                      "pm.test(\"Should have firstName and lastName of type string\", function () {",
+                      "    pm.expect(responseData.firstName).to.be.a('string');",
+                      "    pm.expect(responseData.lastName).to.be.a('string');",
+                      "});",
+                      "",
+                      "pm.test(\"Should have id equal to 1\", function () {",
+                      "    pm.expect(responseData.id).to.equal(1);",
+                      "});",
+                      "",
+                      "pm.test(\"Should have firstName equal to 'Joshua'\", function () {",
+                      "    pm.expect(responseData.firstName).to.equal(\"Joshua\");",
+                      "});",
+                      "",
+                      "pm.test(\"Should have lastName equal to 'Bloch'\", function () {",
+                      "    pm.expect(responseData.lastName).to.equal(\"Bloch\");",
+                      "});",
+                      "",
+                      "pm.test(\"Should have non-empty firstName and lastName\", function () {",
+                      "    pm.expect(responseData.firstName).to.not.be.empty;",
+                      "    pm.expect(responseData.lastName).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should have positive id value\", function () {",
+                      "    pm.expect(responseData.id).to.be.above(0);",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 1000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test(\"Should have Content-Type header containing application/json\", function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "});",
+                      "",
+                      "pm.test(\"Should have object structure with exactly 3 fields\", function () {",
+                      "    const keys = Object.keys(responseData);",
+                      "    pm.expect(keys).to.have.lengthOf(3);",
+                      "    pm.expect(keys).to.include.members(['id', 'firstName', 'lastName']);",
+                      "});",
+                      "",
+                      "pm.test(\"Should not have extra fields\", function () {",
+                      "    const allowedKeys = ['id', 'firstName', 'lastName'];",
+                      "    const actualKeys = Object.keys(responseData);",
+                      "    const extraKeys = actualKeys.filter(key => !allowedKeys.includes(key));",
+                      "    pm.expect(extraKeys).to.be.empty;",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "3a00b771-cf82-42b7-aaea-9808ba1c8f45",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors/1",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "1"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T14:28:43.000Z",
+              "updatedAt": "2026-01-06T15:46:40.000Z",
+              "uid": "31090462-3a00b771-cf82-42b7-aaea-9808ba1c8f45"
+            },
+            {
+              "name": "search author by firstName",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "4ca0f43a-70bb-4281-955a-581cd578109c",
+                    "exec": [
+                      "pm.test('Should return status code 200', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "const responseBodyJson = pm.response.json();",
+                      "",
+                      "pm.test('Should return Content-Type as application/json', function () {",
+                      "  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "});",
+                      "",
+                      "pm.test('Should respond in less than 1000ms', function () {",
+                      "  pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test('Should return response body as an array', function () {",
+                      "  pm.expect(responseBodyJson).to.be.an('array');",
+                      "});",
+                      "",
+                      "pm.test('Should contain at least one author', function () {",
+                      "  pm.expect(responseBodyJson).to.be.an('array').that.has.lengthOf.at.least(1);",
+                      "});",
+                      "",
+                      "pm.test('Should return all authors with firstName \"Joshua\"', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.firstName).to.equal('Joshua');",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should have id, firstName, and lastName properties for each author', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should have positive numbers for all author IDs', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.id).to.be.a('number');",
+                      "    pm.expect(author.id).to.be.above(0);",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should have non-empty strings for firstName and lastName', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.firstName).to.be.a('string').that.is.not.empty;",
+                      "    pm.expect(author.lastName).to.be.a('string').that.is.not.empty;",
+                      "  });",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "c01a52a7-1faa-4b6b-a626-d29eab648d29",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors?firstName={{authorFirstName}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ],
+                  "query": [
+                    {
+                      "key": "firstName",
+                      "value": "{{authorFirstName}}"
+                    }
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T14:34:26.000Z",
+              "updatedAt": "2026-01-06T15:46:41.000Z",
+              "uid": "31090462-c01a52a7-1faa-4b6b-a626-d29eab648d29"
+            },
+            {
+              "name": "search author by lastName",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "4ca0f43a-70bb-4281-955a-581cd578109c",
+                    "exec": [
+                      "pm.test('Should return status code 200', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "const responseBodyJson = pm.response.json();",
+                      "",
+                      "pm.test('Should return Content-Type as application/json', function () {",
+                      "  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "});",
+                      "",
+                      "pm.test('Should respond in less than 1000ms', function () {",
+                      "  pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test('Should return response body as an array', function () {",
+                      "  pm.expect(responseBodyJson).to.be.an('array');",
+                      "});",
+                      "",
+                      "pm.test('Should contain at least one author', function () {",
+                      "  pm.expect(responseBodyJson).to.be.an('array').that.has.lengthOf.at.least(1);",
+                      "});",
+                      "",
+                      "pm.test('Should return all authors with lastName \"Bloch\"', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.lastName).to.equal('Bloch');",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should have id, firstName, and lastName properties for each author', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should have positive numbers for all author IDs', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.id).to.be.a('number');",
+                      "    pm.expect(author.id).to.be.above(0);",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should have non-empty strings for firstName and lastName', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.firstName).to.be.a('string').that.is.not.empty;",
+                      "    pm.expect(author.lastName).to.be.a('string').that.is.not.empty;",
+                      "  });",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "85d65efa-6de6-448c-8901-a94883d1b56b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors?lastName={{authorLastName}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ],
+                  "query": [
+                    {
+                      "key": "lastName",
+                      "value": "{{authorLastName}}"
+                    }
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T15:08:57.000Z",
+              "updatedAt": "2026-01-06T15:46:43.000Z",
+              "uid": "31090462-85d65efa-6de6-448c-8901-a94883d1b56b"
+            },
+            {
+              "name": "search author by firstName and lastName",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "4ca0f43a-70bb-4281-955a-581cd578109c",
+                    "exec": [
+                      "pm.test('Should return status code 200', function () {",
+                      "  pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "const responseBodyJson = pm.response.json();",
+                      "",
+                      "pm.test('Should return Content-Type as application/json', function () {",
+                      "  pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "});",
+                      "",
+                      "pm.test('Should respond in less than 1000ms', function () {",
+                      "  pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test('Should return response body as an array', function () {",
+                      "  pm.expect(responseBodyJson).to.be.an('array');",
+                      "});",
+                      "",
+                      "pm.test('Should contain at least one author', function () {",
+                      "  pm.expect(responseBodyJson).to.be.an('array').that.has.lengthOf.at.least(1);",
+                      "});",
+                      "",
+                      "pm.test('Should return author with firstName Joshua', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.firstName).to.equal('Joshua');",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should return author with lastName Bloch', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.lastName).to.equal('Bloch');",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should have id, firstName, and lastName properties for each author', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should have positive numbers for all author IDs', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.id).to.be.a('number');",
+                      "    pm.expect(author.id).to.be.above(0);",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should have non-empty strings for firstName and lastName', function () {",
+                      "  responseBodyJson.forEach(author => {",
+                      "    pm.expect(author.firstName).to.be.a('string').that.is.not.empty;",
+                      "    pm.expect(author.lastName).to.be.a('string').that.is.not.empty;",
+                      "  });",
+                      "});",
+                      "",
+                      "pm.test('Should match exact firstName and lastName from query parameters', function () {",
+                      "  const author = responseBodyJson[0];",
+                      "  pm.expect(author.firstName).to.equal('Joshua');",
+                      "  pm.expect(author.lastName).to.equal('Bloch');",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "fdb3c7a1-c8f0-4819-a408-6b1952d2bc66",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors?firstName={{authorFirstName}}&&lastName={{authorLastName}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ],
+                  "query": [
+                    {
+                      "key": "firstName",
+                      "value": "{{authorFirstName}}"
+                    },
+                    {
+                      "key": null,
+                      "value": null
+                    },
+                    {
+                      "key": "lastName",
+                      "value": "{{authorLastName}}"
+                    }
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T15:33:21.000Z",
+              "updatedAt": "2026-01-06T15:46:44.000Z",
+              "uid": "31090462-fdb3c7a1-c8f0-4819-a408-6b1952d2bc66"
+            },
+            {
+              "name": "search author by non existing firstName",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ffa1f11a-ff87-46bb-812f-cdc90b6990c0",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return empty list when searching for non-existent first name\", function () {",
+                      "    const responseData = pm.response.json();",
+                      "    pm.expect(responseData).to.be.an('array');",
+                      "    pm.expect(responseData).to.be.empty;",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {}
+                  }
+                }
+              ],
+              "id": "d4b42881-4c64-448e-b8a0-2cfc06c666e6",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors?firstName={{nonExistingAuthorFirstName}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ],
+                  "query": [
+                    {
+                      "key": "firstName",
+                      "value": "{{nonExistingAuthorFirstName}}"
+                    }
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T14:45:56.000Z",
+              "updatedAt": "2026-01-06T15:46:46.000Z",
+              "uid": "31090462-d4b42881-4c64-448e-b8a0-2cfc06c666e6"
+            },
+            {
+              "name": "search author by non existing lastName",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "ffa1f11a-ff87-46bb-812f-cdc90b6990c0",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return empty list when searching for non-existent first name\", function () {",
+                      "    const responseData = pm.response.json();",
+                      "    pm.expect(responseData).to.be.an('array');",
+                      "    pm.expect(responseData).to.be.empty;",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "a6ecd8cd-7888-42ee-80b4-d0c540342390",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors?firstName={{nonExistingAuthorLastName}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ],
+                  "query": [
+                    {
+                      "key": "firstName",
+                      "value": "{{nonExistingAuthorLastName}}"
+                    }
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T15:11:26.000Z",
+              "updatedAt": "2026-01-06T15:46:48.000Z",
+              "uid": "31090462-a6ecd8cd-7888-42ee-80b4-d0c540342390"
+            },
+            {
+              "name": "search author by non existing firstName and lastName",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "4ca0f43a-70bb-4281-955a-581cd578109c",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return empty list when searching for non-existent first name\", function () {",
+                      "    const responseData = pm.response.json();",
+                      "    pm.expect(responseData).to.be.an('array');",
+                      "    pm.expect(responseData).to.be.empty;",
+                      "});",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "a97ca442-f6d2-4b24-a78e-d870010db6ba",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors?firstName={{nonExistingAuthorFirstName}}&&lastName={{nonExistingAuthorLastName}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ],
+                  "query": [
+                    {
+                      "key": "firstName",
+                      "value": "{{nonExistingAuthorFirstName}}"
+                    },
+                    {
+                      "key": null,
+                      "value": null
+                    },
+                    {
+                      "key": "lastName",
+                      "value": "{{nonExistingAuthorLastName}}"
+                    }
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T15:43:46.000Z",
+              "updatedAt": "2026-01-06T15:46:50.000Z",
+              "uid": "31090462-a97ca442-f6d2-4b24-a78e-d870010db6ba"
+            }
+          ],
+          "id": "c5b775c4-54cb-4d24-ad86-7c9e717789c5",
+          "createdAt": "2026-01-06T15:46:27.000Z",
+          "updatedAt": "2026-01-06T16:39:28.000Z",
+          "uid": "31090462-c5b775c4-54cb-4d24-ad86-7c9e717789c5"
+        },
+        {
+          "name": "create and delete author",
+          "item": [
+            {
+              "name": "create author with valid data",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      "pm.collectionVariables.set(\"colRandomFirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));",
+                      "pm.collectionVariables.set(\"colRandomLastName\", pm.variables.replaceIn('{{$randomLastName}}'));",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 500ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return JSON response\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseJson = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return id in response\", function () {",
+                      "    pm.expect(responseJson).to.have.property('id');",
+                      "    pm.expect(responseJson.id).to.be.a('number');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return firstName matching the request\", function () {",
+                      "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                      "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return lastName matching the request\", function () {",
+                      "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                      "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response with correct structure\", function () {",
+                      "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return non-empty fields\", function () {",
+                      "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                      "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with valid length\", function () {",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with correct data types\", function () {",
+                      "    pm.expect(responseJson.firstName).to.be.a('string');",
+                      "    pm.expect(responseJson.lastName).to.be.a('string');",
+                      "});",
+                      "",
+                      "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "86516e49-4410-432c-a002-c85b32cfbfb7",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"{{colRandomFirstName}}\",\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T15:47:21.000Z",
+              "updatedAt": "2026-01-06T16:38:34.000Z",
+              "uid": "31090462-86516e49-4410-432c-a002-c85b32cfbfb7"
+            },
+            {
+              "name": "delete author",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 204\", function () {",
+                      "    pm.response.to.have.status(204);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "5ccb87b1-2a39-4f70-8f5f-974d4164df22",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T16:37:25.000Z",
+              "updatedAt": "2026-01-07T08:44:18.000Z",
+              "uid": "31090462-5ccb87b1-2a39-4f70-8f5f-974d4164df22"
+            },
+            {
+              "name": "read deleted author by id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "86c8a856-c031-4e3b-9070-8dfa0bf0583d",
+                    "exec": [
+                      "pm.test(\"Should return status code 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "70858cb8-3740-44c4-b7df-1cf608d1cc14",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T16:39:26.000Z",
+              "updatedAt": "2026-01-06T16:40:07.000Z",
+              "uid": "31090462-70858cb8-3740-44c4-b7df-1cf608d1cc14"
+            },
+            {
+              "name": "create author - missing firstName",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test('Should return status code 400 Bad Request', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "const responseBodyJson = pm.response.json();",
+                      "",
+                      "pm.test('Should return status message \"Bad Request\"', function () {",
+                      "    pm.expect(pm.response.status).to.equal('Bad Request');",
+                      "});",
+                      "",
+                      "pm.test('Should respond in less than 2000ms', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                      "});",
+                      "",
+                      "pm.test('Should return Content-Type header as application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "});",
+                      "",
+                      "pm.test('Should return response body with required error properties', function () {",
+                      "    pm.expect(responseBodyJson).to.have.property('timestamp');",
+                      "    pm.expect(responseBodyJson).to.have.property('status');",
+                      "    pm.expect(responseBodyJson).to.have.property('error');",
+                      "    pm.expect(responseBodyJson).to.have.property('message');",
+                      "});",
+                      "",
+                      "pm.test('Should return status property as 400', function () {",
+                      "    pm.expect(responseBodyJson.status).to.equal(400);",
+                      "});",
+                      "",
+                      "pm.test('Should return error property as \"Bad Request\"', function () {",
+                      "    pm.expect(responseBodyJson.error).to.equal('Bad Request');",
+                      "});",
+                      "",
+                      "pm.test('Should return message property as an array', function () {",
+                      "    pm.expect(responseBodyJson.message).to.be.an('array');",
+                      "});",
+                      "",
+                      "pm.test('Should return non-empty message array', function () {",
+                      "    pm.expect(responseBodyJson.message).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test('Should return message array containing firstName validation error', function () {",
+                      "    pm.expect(responseBodyJson.message).to.include('firstName incorrect input data');",
+                      "});",
+                      "",
+                      "pm.test('Should return timestamp in valid ISO 8601 format', function () {",
+                      "    const isoDateRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}$/;",
+                      "    pm.expect(responseBodyJson.timestamp).to.match(isoDateRegex);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "8999e139-bd98-4e16-b477-93d153cb6101",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"lastName\": \"Testowy\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T16:03:39.000Z",
+              "updatedAt": "2026-01-06T16:14:09.000Z",
+              "uid": "31090462-8999e139-bd98-4e16-b477-93d153cb6101"
+            },
+            {
+              "name": "create author - missing lastName",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test('Should return status code 400 Bad Request', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "const responseBodyJson = pm.response.json();",
+                      "",
+                      "pm.test('Should return status message \"Bad Request\"', function () {",
+                      "    pm.expect(pm.response.status).to.equal('Bad Request');",
+                      "});",
+                      "",
+                      "pm.test('Should respond in less than 2000ms', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                      "});",
+                      "",
+                      "pm.test('Should return Content-Type header as application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "});",
+                      "",
+                      "pm.test('Should return response body with required error properties', function () {",
+                      "    pm.expect(responseBodyJson).to.have.property('timestamp');",
+                      "    pm.expect(responseBodyJson).to.have.property('status');",
+                      "    pm.expect(responseBodyJson).to.have.property('error');",
+                      "    pm.expect(responseBodyJson).to.have.property('message');",
+                      "});",
+                      "",
+                      "pm.test('Should return status property as 400', function () {",
+                      "    pm.expect(responseBodyJson.status).to.equal(400);",
+                      "});",
+                      "",
+                      "pm.test('Should return error property as \"Bad Request\"', function () {",
+                      "    pm.expect(responseBodyJson.error).to.equal('Bad Request');",
+                      "});",
+                      "",
+                      "pm.test('Should return message property as an array', function () {",
+                      "    pm.expect(responseBodyJson.message).to.be.an('array');",
+                      "});",
+                      "",
+                      "pm.test('Should return non-empty message array', function () {",
+                      "    pm.expect(responseBodyJson.message).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test('Should return message array containing lastName validation error', function () {",
+                      "    pm.expect(responseBodyJson.message).to.include('lastName incorrect input data');",
+                      "});",
+                      "",
+                      "pm.test('Should return timestamp in valid ISO 8601 format', function () {",
+                      "    const isoDateRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}$/;",
+                      "    pm.expect(responseBodyJson.timestamp).to.match(isoDateRegex);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "443fab51-ce70-4bb6-afdc-9d08288a58ec",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"Bartek\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T16:13:34.000Z",
+              "updatedAt": "2026-01-06T16:14:59.000Z",
+              "uid": "31090462-443fab51-ce70-4bb6-afdc-9d08288a58ec"
+            },
+            {
+              "name": "create author - missing firstName and lastName",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test('Should return status code 400 Bad Request', function () {",
+                      "    pm.response.to.have.status(400);",
+                      "});",
+                      "",
+                      "const responseBodyJson = pm.response.json();",
+                      "",
+                      "pm.test('Should return status message \"Bad Request\"', function () {",
+                      "    pm.expect(pm.response.status).to.equal('Bad Request');",
+                      "});",
+                      "",
+                      "pm.test('Should respond in less than 2000ms', function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                      "});",
+                      "",
+                      "pm.test('Should return Content-Type header as application/json', function () {",
+                      "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                      "});",
+                      "",
+                      "pm.test('Should return response body with required error properties', function () {",
+                      "    pm.expect(responseBodyJson).to.have.property('timestamp');",
+                      "    pm.expect(responseBodyJson).to.have.property('status');",
+                      "    pm.expect(responseBodyJson).to.have.property('error');",
+                      "    pm.expect(responseBodyJson).to.have.property('message');",
+                      "});",
+                      "",
+                      "pm.test('Should return status property as 400', function () {",
+                      "    pm.expect(responseBodyJson.status).to.equal(400);",
+                      "});",
+                      "",
+                      "pm.test('Should return error property as \"Bad Request\"', function () {",
+                      "    pm.expect(responseBodyJson.error).to.equal('Bad Request');",
+                      "});",
+                      "",
+                      "pm.test('Should return message property as an array', function () {",
+                      "    pm.expect(responseBodyJson.message).to.be.an('array');",
+                      "});",
+                      "",
+                      "pm.test('Should return non-empty message array', function () {",
+                      "    pm.expect(responseBodyJson.message).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test('Should return message array containing firstName validation error', function () {",
+                      "    pm.expect(responseBodyJson.message).to.include('firstName incorrect input data');",
+                      "});",
+                      "",
+                      "pm.test('Should return message array containing lastName validation error', function () {",
+                      "    pm.expect(responseBodyJson.message).to.include('lastName incorrect input data');",
+                      "});",
+                      "",
+                      "pm.test('Should return timestamp in valid ISO 8601 format', function () {",
+                      "    const isoDateRegex = /^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}\\+\\d{2}:\\d{2}$/;",
+                      "    pm.expect(responseBodyJson.timestamp).to.match(isoDateRegex);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "db0deb93-8772-45a0-b5ad-cfeea0e65296",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-06T16:18:52.000Z",
+              "updatedAt": "2026-01-06T16:36:31.000Z",
+              "uid": "31090462-db0deb93-8772-45a0-b5ad-cfeea0e65296"
+            }
+          ],
+          "id": "6ce11cc6-bcb3-472d-b813-e019a654b8d8",
+          "createdAt": "2026-01-06T15:47:09.000Z",
+          "updatedAt": "2026-01-07T08:44:36.000Z",
+          "uid": "31090462-6ce11cc6-bcb3-472d-b813-e019a654b8d8"
+        },
+        {
+          "name": "edit author",
+          "item": [
+            {
+              "name": "validations",
+              "item": [
+                {
+                  "name": "create author",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                        "exec": [
+                          "pm.collectionVariables.set(\"colRandomFirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));",
+                          "pm.collectionVariables.set(\"colRandomLastName\", pm.variables.replaceIn('{{$randomLastName}}'));",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                        "exec": [
+                          "pm.test(\"Should return status code 201\", function () {",
+                          "    pm.response.to.have.status(201);",
+                          "});",
+                          "",
+                          "pm.test(\"Should respond in less than 1000ms\", function () {",
+                          "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                          "});",
+                          "",
+                          "pm.test(\"Should return JSON response\", function () {",
+                          "    pm.response.to.be.json;",
+                          "});",
+                          "",
+                          "const responseJson = pm.response.json();",
+                          "",
+                          "pm.test(\"Should return id in response\", function () {",
+                          "    pm.expect(responseJson).to.have.property('id');",
+                          "    pm.expect(responseJson.id).to.be.a('number');",
+                          "});",
+                          "",
+                          "pm.test(\"Should return firstName matching the request\", function () {",
+                          "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                          "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                          "});",
+                          "",
+                          "pm.test(\"Should return lastName matching the request\", function () {",
+                          "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                          "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                          "});",
+                          "",
+                          "pm.test(\"Should return response with correct structure\", function () {",
+                          "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                          "});",
+                          "",
+                          "pm.test(\"Should return non-empty fields\", function () {",
+                          "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                          "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                          "});",
+                          "",
+                          "pm.test(\"Should return fields with valid length\", function () {",
+                          "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                          "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                          "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                          "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                          "});",
+                          "",
+                          "pm.test(\"Should return fields with correct data types\", function () {",
+                          "    pm.expect(responseJson.firstName).to.be.a('string');",
+                          "    pm.expect(responseJson.lastName).to.be.a('string');",
+                          "});",
+                          "",
+                          "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                          "",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "id": "f927f347-b8a9-4f65-b525-ce57f8921618",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "POST",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"firstName\": \"{{colRandomFirstName}}\",\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authors",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authors"
+                      ]
+                    }
+                  },
+                  "response": [],
+                  "createdAt": "2026-01-07T08:55:49.000Z",
+                  "updatedAt": "2026-01-07T08:56:25.000Z",
+                  "uid": "31090462-f927f347-b8a9-4f65-b525-ce57f8921618"
+                },
+                {
+                  "name": "edit author with empty json",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                        "exec": [
+                          "",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                        "exec": [
+                          "pm.test('Should return status code 400 Bad Request', function () {",
+                          "    pm.response.to.have.status(400);",
+                          "});",
+                          "",
+                          "const responseBodyJson = pm.response.json();",
+                          "",
+                          "pm.test('Should return status message \"Bad Request\"', function () {",
+                          "    pm.expect(pm.response.status).to.equal('Bad Request');",
+                          "});",
+                          "",
+                          "pm.test('Should respond in less than 2000ms', function () {",
+                          "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                          "});",
+                          "",
+                          "pm.test('Should return Content-Type header as application/json', function () {",
+                          "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                          "});",
+                          "",
+                          "pm.test('Should return response body with required error properties', function () {",
+                          "    pm.expect(responseBodyJson).to.have.property('timestamp');",
+                          "    pm.expect(responseBodyJson).to.have.property('status');",
+                          "    pm.expect(responseBodyJson).to.have.property('error');",
+                          "    pm.expect(responseBodyJson).to.have.property('message');",
+                          "});",
+                          "",
+                          "pm.test('Should return status property as 400', function () {",
+                          "    pm.expect(responseBodyJson.status).to.equal(400);",
+                          "});",
+                          "",
+                          "pm.test('Should return error property as \"Bad Request\"', function () {",
+                          "    pm.expect(responseBodyJson.error).to.equal('Bad Request');",
+                          "});",
+                          "",
+                          "pm.test('Should return message property as an array', function () {",
+                          "    pm.expect(responseBodyJson.message).to.be.an('array');",
+                          "});",
+                          "",
+                          "pm.test('Should return non-empty message array', function () {",
+                          "    pm.expect(responseBodyJson.message).to.not.be.empty;",
+                          "});",
+                          "",
+                          "pm.test('Should return message array containing firstName validation error', function () {",
+                          "    pm.expect(responseBodyJson.message).to.include('firstName incorrect input data');",
+                          "});",
+                          "",
+                          "pm.test('Should return message array containing lastName validation error', function () {",
+                          "    pm.expect(responseBodyJson.message).to.include('lastName incorrect input data');",
+                          "});",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "id": "83ef9e37-a86d-4aa7-b9b3-c555523dd6db",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authors",
+                        "{{colAuthorId}}"
+                      ]
+                    }
+                  },
+                  "response": [],
+                  "createdAt": "2026-01-07T08:55:55.000Z",
+                  "updatedAt": "2026-01-07T09:03:06.000Z",
+                  "uid": "31090462-83ef9e37-a86d-4aa7-b9b3-c555523dd6db"
+                },
+                {
+                  "name": "edit author missing firstName",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                        "exec": [
+                          "pm.test('Should return status code 400 Bad Request', function () {",
+                          "    pm.response.to.have.status(400);",
+                          "});",
+                          "",
+                          "const responseBodyJson = pm.response.json();",
+                          "",
+                          "pm.test('Should return status message \"Bad Request\"', function () {",
+                          "    pm.expect(pm.response.status).to.equal('Bad Request');",
+                          "});",
+                          "",
+                          "pm.test('Should respond in less than 2000ms', function () {",
+                          "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                          "});",
+                          "",
+                          "pm.test('Should return Content-Type header as application/json', function () {",
+                          "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                          "});",
+                          "",
+                          "pm.test('Should return response body with required error properties', function () {",
+                          "    pm.expect(responseBodyJson).to.have.property('timestamp');",
+                          "    pm.expect(responseBodyJson).to.have.property('status');",
+                          "    pm.expect(responseBodyJson).to.have.property('error');",
+                          "    pm.expect(responseBodyJson).to.have.property('message');",
+                          "});",
+                          "",
+                          "pm.test('Should return status property as 400', function () {",
+                          "    pm.expect(responseBodyJson.status).to.equal(400);",
+                          "});",
+                          "",
+                          "pm.test('Should return error property as \"Bad Request\"', function () {",
+                          "    pm.expect(responseBodyJson.error).to.equal('Bad Request');",
+                          "});",
+                          "",
+                          "pm.test('Should return message property as an array', function () {",
+                          "    pm.expect(responseBodyJson.message).to.be.an('array');",
+                          "});",
+                          "",
+                          "pm.test('Should return non-empty message array', function () {",
+                          "    pm.expect(responseBodyJson.message).to.not.be.empty;",
+                          "});",
+                          "",
+                          "pm.test('Should return message array containing firstName validation error', function () {",
+                          "    pm.expect(responseBodyJson.message).to.include('firstName incorrect input data');",
+                          "});",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "id": "5b12951c-ef3d-4c8f-9019-f75f772c259c",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authors",
+                        "{{colAuthorId}}"
+                      ]
+                    }
+                  },
+                  "response": [],
+                  "createdAt": "2026-01-07T08:59:21.000Z",
+                  "updatedAt": "2026-01-07T09:03:14.000Z",
+                  "uid": "31090462-5b12951c-ef3d-4c8f-9019-f75f772c259c"
+                },
+                {
+                  "name": "edit author missing lastName",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                        "exec": [
+                          "pm.test('Should return status code 400 Bad Request', function () {",
+                          "    pm.response.to.have.status(400);",
+                          "});",
+                          "",
+                          "const responseBodyJson = pm.response.json();",
+                          "",
+                          "pm.test('Should return status message \"Bad Request\"', function () {",
+                          "    pm.expect(pm.response.status).to.equal('Bad Request');",
+                          "});",
+                          "",
+                          "pm.test('Should respond in less than 2000ms', function () {",
+                          "    pm.expect(pm.response.responseTime).to.be.below(2000);",
+                          "});",
+                          "",
+                          "pm.test('Should return Content-Type header as application/json', function () {",
+                          "    pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json');",
+                          "});",
+                          "",
+                          "pm.test('Should return response body with required error properties', function () {",
+                          "    pm.expect(responseBodyJson).to.have.property('timestamp');",
+                          "    pm.expect(responseBodyJson).to.have.property('status');",
+                          "    pm.expect(responseBodyJson).to.have.property('error');",
+                          "    pm.expect(responseBodyJson).to.have.property('message');",
+                          "});",
+                          "",
+                          "pm.test('Should return status property as 400', function () {",
+                          "    pm.expect(responseBodyJson.status).to.equal(400);",
+                          "});",
+                          "",
+                          "pm.test('Should return error property as \"Bad Request\"', function () {",
+                          "    pm.expect(responseBodyJson.error).to.equal('Bad Request');",
+                          "});",
+                          "",
+                          "pm.test('Should return message property as an array', function () {",
+                          "    pm.expect(responseBodyJson.message).to.be.an('array');",
+                          "});",
+                          "",
+                          "pm.test('Should return non-empty message array', function () {",
+                          "    pm.expect(responseBodyJson.message).to.not.be.empty;",
+                          "});",
+                          "",
+                          "pm.test('Should return message array containing lastName validation error', function () {",
+                          "    pm.expect(responseBodyJson.message).to.include('lastName incorrect input data');",
+                          "});",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "id": "9c3118bf-9dc3-41b5-9d38-a7cfc0afee09",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "PUT",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"firstName\": \"{{colRandomFirstName}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authors",
+                        "{{colAuthorId}}"
+                      ]
+                    }
+                  },
+                  "response": [],
+                  "createdAt": "2026-01-07T09:00:11.000Z",
+                  "updatedAt": "2026-01-07T09:03:19.000Z",
+                  "uid": "31090462-9c3118bf-9dc3-41b5-9d38-a7cfc0afee09"
+                },
+                {
+                  "name": "read author by id",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                        "exec": [
+                          "pm.test(\"Should return status code 200\", function () {",
+                          "    pm.response.to.have.status(200);",
+                          "});",
+                          "",
+                          "pm.test(\"Should respond in less than 1000ms\", function () {",
+                          "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                          "});",
+                          "",
+                          "pm.test(\"Should return JSON response\", function () {",
+                          "    pm.response.to.be.json;",
+                          "});",
+                          "",
+                          "const responseJson = pm.response.json();",
+                          "",
+                          "pm.test(\"Should return id in response\", function () {",
+                          "    pm.expect(responseJson).to.have.property('id');",
+                          "    pm.expect(responseJson.id).to.be.a('number');",
+                          "});",
+                          "",
+                          "pm.test(\"Should return firstName matching the request\", function () {",
+                          "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                          "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                          "});",
+                          "",
+                          "pm.test(\"Should return lastName matching the request\", function () {",
+                          "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                          "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                          "});",
+                          "",
+                          "pm.test(\"Should return response with correct structure\", function () {",
+                          "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                          "});",
+                          "",
+                          "pm.test(\"Should return non-empty fields\", function () {",
+                          "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                          "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                          "});",
+                          "",
+                          "pm.test(\"Should return fields with valid length\", function () {",
+                          "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                          "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                          "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                          "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                          "});",
+                          "",
+                          "pm.test(\"Should return fields with correct data types\", function () {",
+                          "    pm.expect(responseJson.firstName).to.be.a('string');",
+                          "    pm.expect(responseJson.lastName).to.be.a('string');",
+                          "});",
+                          "",
+                          "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                          "",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "id": "6ad7040b-7daa-4f72-89d4-e458f0501901",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"firstName\": \"{{colRandomFirstName}}\",\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authors",
+                        "{{colAuthorId}}"
+                      ]
+                    }
+                  },
+                  "response": [],
+                  "createdAt": "2026-01-07T09:01:15.000Z",
+                  "updatedAt": "2026-01-07T09:02:35.000Z",
+                  "uid": "31090462-6ad7040b-7daa-4f72-89d4-e458f0501901"
+                },
+                {
+                  "name": "delete author",
+                  "event": [
+                    {
+                      "listen": "prerequest",
+                      "script": {
+                        "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                        "exec": [
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    },
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                        "exec": [
+                          "pm.test(\"Should return status code 204\", function () {",
+                          "    pm.response.to.have.status(204);",
+                          "});"
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "id": "0ad96b0c-f471-4269-9ea1-b329eb31a2ec",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "DELETE",
+                    "header": [],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authors",
+                        "{{colAuthorId}}"
+                      ]
+                    }
+                  },
+                  "response": [],
+                  "createdAt": "2026-01-07T08:44:05.000Z",
+                  "updatedAt": "2026-01-07T08:56:08.000Z",
+                  "uid": "31090462-0ad96b0c-f471-4269-9ea1-b329eb31a2ec"
+                },
+                {
+                  "name": "read deleted author by id",
+                  "event": [
+                    {
+                      "listen": "test",
+                      "script": {
+                        "id": "86c8a856-c031-4e3b-9070-8dfa0bf0583d",
+                        "exec": [
+                          "pm.test(\"Should return status code 404\", function () {",
+                          "    pm.response.to.have.status(404);",
+                          "});",
+                          "",
+                          ""
+                        ],
+                        "type": "text/javascript",
+                        "packages": {},
+                        "requests": {}
+                      }
+                    }
+                  ],
+                  "id": "d36096af-6019-48b2-96e4-9756c74387ff",
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  },
+                  "request": {
+                    "method": "GET",
+                    "header": [],
+                    "url": {
+                      "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "authors",
+                        "{{colAuthorId}}"
+                      ]
+                    }
+                  },
+                  "response": [],
+                  "createdAt": "2026-01-07T08:56:10.000Z",
+                  "updatedAt": "2026-01-07T09:28:16.000Z",
+                  "uid": "31090462-d36096af-6019-48b2-96e4-9756c74387ff"
+                }
+              ],
+              "id": "37a730f1-ee7b-47b7-bdc4-688e495e5d11",
+              "createdAt": "2026-01-07T08:55:38.000Z",
+              "updatedAt": "2026-01-07T09:35:16.000Z",
+              "uid": "31090462-37a730f1-ee7b-47b7-bdc4-688e495e5d11"
+            },
+            {
+              "name": "create author",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      "pm.collectionVariables.set(\"colRandomFirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));",
+                      "pm.collectionVariables.set(\"colRandomLastName\", pm.variables.replaceIn('{{$randomLastName}}'));",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 1000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return JSON response\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseJson = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return id in response\", function () {",
+                      "    pm.expect(responseJson).to.have.property('id');",
+                      "    pm.expect(responseJson.id).to.be.a('number');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return firstName matching the request\", function () {",
+                      "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                      "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return lastName matching the request\", function () {",
+                      "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                      "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response with correct structure\", function () {",
+                      "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return non-empty fields\", function () {",
+                      "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                      "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with valid length\", function () {",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with correct data types\", function () {",
+                      "    pm.expect(responseJson.firstName).to.be.a('string');",
+                      "    pm.expect(responseJson.lastName).to.be.a('string');",
+                      "});",
+                      "",
+                      "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "1bd1e552-e243-48d5-bf80-ee14a764bf58",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"{{colRandomFirstName}}\",\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T08:41:46.000Z",
+              "updatedAt": "2026-01-07T08:54:42.000Z",
+              "uid": "31090462-1bd1e552-e243-48d5-bf80-ee14a764bf58"
+            },
+            {
+              "name": "edit author",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      "pm.collectionVariables.set(\"colRandomFirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));",
+                      "pm.collectionVariables.set(\"colRandomLastName\", pm.variables.replaceIn('{{$randomLastName}}'));",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 500ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(500);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return JSON response\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseJson = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return id in response\", function () {",
+                      "    pm.expect(responseJson).to.have.property('id');",
+                      "    pm.expect(responseJson.id).to.be.a('number');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return firstName matching the request\", function () {",
+                      "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                      "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return lastName matching the request\", function () {",
+                      "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                      "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response with correct structure\", function () {",
+                      "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return non-empty fields\", function () {",
+                      "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                      "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with valid length\", function () {",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with correct data types\", function () {",
+                      "    pm.expect(responseJson.firstName).to.be.a('string');",
+                      "    pm.expect(responseJson.lastName).to.be.a('string');",
+                      "});",
+                      "",
+                      "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "9d75c2b0-51b7-4948-bcd9-9e05ddce026d",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PUT",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"{{colRandomFirstName}}\",\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T08:42:31.000Z",
+              "updatedAt": "2026-01-07T08:55:16.000Z",
+              "uid": "31090462-9d75c2b0-51b7-4948-bcd9-9e05ddce026d"
+            },
+            {
+              "name": "delete author",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 204\", function () {",
+                      "    pm.response.to.have.status(204);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "a2072447-b96f-4d7b-bb3b-e271d7bb2d8b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T09:35:12.000Z",
+              "updatedAt": "2026-01-07T09:35:20.000Z",
+              "uid": "31090462-a2072447-b96f-4d7b-bb3b-e271d7bb2d8b"
+            },
+            {
+              "name": "read deleted author by id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "86c8a856-c031-4e3b-9070-8dfa0bf0583d",
+                    "exec": [
+                      "pm.test(\"Should return status code 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "020263e5-bc90-45e5-bf0b-278894d8a6bd",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T08:44:33.000Z",
+              "updatedAt": "2026-01-07T08:44:45.000Z",
+              "uid": "31090462-020263e5-bc90-45e5-bf0b-278894d8a6bd"
+            }
+          ],
+          "id": "c4cc0a2f-7e85-4b74-bf7f-d70741315bac",
+          "createdAt": "2026-01-07T08:40:59.000Z",
+          "updatedAt": "2026-01-07T09:36:14.000Z",
+          "uid": "31090462-c4cc0a2f-7e85-4b74-bf7f-d70741315bac"
+        },
+        {
+          "name": "partial edit author",
+          "item": [
+            {
+              "name": "create author",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      "pm.collectionVariables.set(\"colRandomFirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));",
+                      "pm.collectionVariables.set(\"colRandomLastName\", pm.variables.replaceIn('{{$randomLastName}}'));",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 201\", function () {",
+                      "    pm.response.to.have.status(201);",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 1000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return JSON response\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseJson = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return id in response\", function () {",
+                      "    pm.expect(responseJson).to.have.property('id');",
+                      "    pm.expect(responseJson.id).to.be.a('number');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return firstName matching the request\", function () {",
+                      "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                      "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return lastName matching the request\", function () {",
+                      "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                      "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response with correct structure\", function () {",
+                      "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return non-empty fields\", function () {",
+                      "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                      "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with valid length\", function () {",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with correct data types\", function () {",
+                      "    pm.expect(responseJson.firstName).to.be.a('string');",
+                      "    pm.expect(responseJson.lastName).to.be.a('string');",
+                      "});",
+                      "",
+                      "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "403d57ee-2691-4c7c-983c-95b3bc1da34b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"{{colRandomFirstName}}\",\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T09:28:24.000Z",
+              "updatedAt": "2026-01-07T09:28:41.000Z",
+              "uid": "31090462-403d57ee-2691-4c7c-983c-95b3bc1da34b"
+            },
+            {
+              "name": "edit author firstName",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      "pm.collectionVariables.set(\"colRandomFirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 1000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return JSON response\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseJson = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return id in response\", function () {",
+                      "    pm.expect(responseJson).to.have.property('id');",
+                      "    pm.expect(responseJson.id).to.be.a('number');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return firstName matching the request\", function () {",
+                      "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                      "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return lastName matching the request\", function () {",
+                      "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                      "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response with correct structure\", function () {",
+                      "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return non-empty fields\", function () {",
+                      "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                      "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with valid length\", function () {",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with correct data types\", function () {",
+                      "    pm.expect(responseJson.firstName).to.be.a('string');",
+                      "    pm.expect(responseJson.lastName).to.be.a('string');",
+                      "});",
+                      "",
+                      "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "56a49e42-cfd4-4e2c-97b4-6d40f0752154",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"{{colRandomFirstName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T09:28:31.000Z",
+              "updatedAt": "2026-01-07T09:30:47.000Z",
+              "uid": "31090462-56a49e42-cfd4-4e2c-97b4-6d40f0752154"
+            },
+            {
+              "name": "edit author lastName",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      "pm.collectionVariables.set(\"colRandomLastName\", pm.variables.replaceIn('{{$randomLastName}}'));",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 1000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return JSON response\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseJson = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return id in response\", function () {",
+                      "    pm.expect(responseJson).to.have.property('id');",
+                      "    pm.expect(responseJson.id).to.be.a('number');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return firstName matching the request\", function () {",
+                      "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                      "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return lastName matching the request\", function () {",
+                      "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                      "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response with correct structure\", function () {",
+                      "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return non-empty fields\", function () {",
+                      "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                      "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with valid length\", function () {",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with correct data types\", function () {",
+                      "    pm.expect(responseJson.firstName).to.be.a('string');",
+                      "    pm.expect(responseJson.lastName).to.be.a('string');",
+                      "});",
+                      "",
+                      "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "90474fc9-36a5-4fa6-a5d6-3337ff49239b",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T09:30:56.000Z",
+              "updatedAt": "2026-01-07T09:32:06.000Z",
+              "uid": "31090462-90474fc9-36a5-4fa6-a5d6-3337ff49239b"
+            },
+            {
+              "name": "edit author firstName and lastName",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      "pm.collectionVariables.set(\"colRandomFirstName\", pm.variables.replaceIn('{{$randomFirstName}}'));",
+                      "pm.collectionVariables.set(\"colRandomLastName\", pm.variables.replaceIn('{{$randomLastName}}'));",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 1000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return JSON response\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseJson = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return id in response\", function () {",
+                      "    pm.expect(responseJson).to.have.property('id');",
+                      "    pm.expect(responseJson.id).to.be.a('number');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return firstName matching the request\", function () {",
+                      "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                      "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return lastName matching the request\", function () {",
+                      "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                      "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response with correct structure\", function () {",
+                      "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return non-empty fields\", function () {",
+                      "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                      "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with valid length\", function () {",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with correct data types\", function () {",
+                      "    pm.expect(responseJson.firstName).to.be.a('string');",
+                      "    pm.expect(responseJson.lastName).to.be.a('string');",
+                      "});",
+                      "",
+                      "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "f68cbaa8-b200-4566-affe-a20abf0ae273",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"firstName\": \"{{colRandomFirstName}}\",\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T09:32:40.000Z",
+              "updatedAt": "2026-01-07T09:33:24.000Z",
+              "uid": "31090462-f68cbaa8-b200-4566-affe-a20abf0ae273"
+            },
+            {
+              "name": "edit author with empty json",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 200\", function () {",
+                      "    pm.response.to.have.status(200);",
+                      "});",
+                      "",
+                      "pm.test(\"Should respond in less than 1000ms\", function () {",
+                      "    pm.expect(pm.response.responseTime).to.be.below(1000);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return JSON response\", function () {",
+                      "    pm.response.to.be.json;",
+                      "});",
+                      "",
+                      "const responseJson = pm.response.json();",
+                      "",
+                      "pm.test(\"Should return id in response\", function () {",
+                      "    pm.expect(responseJson).to.have.property('id');",
+                      "    pm.expect(responseJson.id).to.be.a('number');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return firstName matching the request\", function () {",
+                      "    const sentFirstName = pm.collectionVariables.get(\"colRandomFirstName\");",
+                      "    pm.expect(responseJson.firstName).to.eql(sentFirstName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return lastName matching the request\", function () {",
+                      "    const sentLastName = pm.collectionVariables.get(\"colRandomLastName\");",
+                      "    pm.expect(responseJson.lastName).to.eql(sentLastName);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return response with correct structure\", function () {",
+                      "    pm.expect(responseJson).to.have.all.keys('id', 'firstName', 'lastName');",
+                      "});",
+                      "",
+                      "pm.test(\"Should return non-empty fields\", function () {",
+                      "    pm.expect(responseJson.firstName).to.not.be.empty;",
+                      "    pm.expect(responseJson.lastName).to.not.be.empty;",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with valid length\", function () {",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.firstName.length).to.be.at.most(128);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.least(1);",
+                      "    pm.expect(responseJson.lastName.length).to.be.at.most(128);",
+                      "});",
+                      "",
+                      "pm.test(\"Should return fields with correct data types\", function () {",
+                      "    pm.expect(responseJson.firstName).to.be.a('string');",
+                      "    pm.expect(responseJson.lastName).to.be.a('string');",
+                      "});",
+                      "",
+                      "pm.collectionVariables.set(\"colAuthorId\", responseJson.id);",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "f26140d8-7eb8-445b-b687-4144199062f8",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "PATCH",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T09:33:35.000Z",
+              "updatedAt": "2026-01-07T09:33:59.000Z",
+              "uid": "31090462-f26140d8-7eb8-445b-b687-4144199062f8"
+            },
+            {
+              "name": "delete author",
+              "event": [
+                {
+                  "listen": "prerequest",
+                  "script": {
+                    "id": "fde04aad-8211-4bca-bba3-952da04cbaed",
+                    "exec": [
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                },
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "1a83c974-b107-4918-b6c3-8d7dc11bff68",
+                    "exec": [
+                      "pm.test(\"Should return status code 204\", function () {",
+                      "    pm.response.to.have.status(204);",
+                      "});"
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "1f19ae09-aee2-4f35-8dc9-ca0e5ac1a020",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n    \"lastName\": \"{{colRandomLastName}}\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T09:36:03.000Z",
+              "updatedAt": "2026-01-07T09:36:08.000Z",
+              "uid": "31090462-1f19ae09-aee2-4f35-8dc9-ca0e5ac1a020"
+            },
+            {
+              "name": "read deleted author by id",
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "id": "86c8a856-c031-4e3b-9070-8dfa0bf0583d",
+                    "exec": [
+                      "pm.test(\"Should return status code 404\", function () {",
+                      "    pm.response.to.have.status(404);",
+                      "});",
+                      "",
+                      ""
+                    ],
+                    "type": "text/javascript",
+                    "packages": {},
+                    "requests": {}
+                  }
+                }
+              ],
+              "id": "e27ed006-7ae6-45a0-a627-5f2d302439af",
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              },
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{baseUrl}}/authors/{{colAuthorId}}",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "authors",
+                    "{{colAuthorId}}"
+                  ]
+                }
+              },
+              "response": [],
+              "createdAt": "2026-01-07T09:36:12.000Z",
+              "updatedAt": "2026-01-07T09:36:23.000Z",
+              "uid": "31090462-e27ed006-7ae6-45a0-a627-5f2d302439af"
+            }
+          ],
+          "id": "b3401237-f146-4e68-bc7f-6e727d1a21a8",
+          "createdAt": "2026-01-07T09:27:55.000Z",
+          "updatedAt": "2026-01-07T09:36:14.000Z",
+          "uid": "31090462-b3401237-f146-4e68-bc7f-6e727d1a21a8"
+        }
+      ],
+      "id": "1cda41f7-a08f-4dc6-9a45-c4ab31c47c3f",
+      "createdAt": "2026-01-06T13:43:36.000Z",
+      "updatedAt": "2026-01-07T09:27:55.000Z",
+      "uid": "31090462-1cda41f7-a08f-4dc6-9a45-c4ab31c47c3f"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "id": "6eda7d24-b556-4736-8f83-fcc7a9a27dba",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "id": "56ea440e-f41c-4304-bc13-f5abadf82834",
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "authorFirstName",
+      "value": "joshua"
+    },
+    {
+      "key": "nonExistingAuthorFirstName",
+      "value": "joshuajoshuajoshua"
+    },
+    {
+      "key": "authorLastName",
+      "value": "bloch"
+    },
+    {
+      "key": "nonExistingAuthorLastName",
+      "value": "blochblochbloch"
+    },
+    {
+      "key": "colRandomFirstName",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "colRandomLastName",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "colAuthorId",
+      "value": "",
+      "type": "default"
+    }
+  ]
+}

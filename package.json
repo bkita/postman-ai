@@ -7,9 +7,11 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "pm:sync": "dotenv node scripts/exportPostmanCollection.js",
+    "pm:export:col": "dotenv node scripts/exportPostmanCollection.js",
+    "pm:export:env": "dotenv node scripts/exportPostmanEnvironment.js",
+    "pm:sync": "npm run pm:export:col && npm run pm:export:env",
     "pm:test": "dotenv -- node scripts/runNewman.js",
-    "pm:sync-test": "npm run pm:sync && npm run pm:test"
+    "pm:sync:test": "npm run pm:sync && npm run pm:test"
   },
   "dependencies": {
     "dotenv-cli": "^11.0.0"
