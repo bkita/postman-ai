@@ -24,7 +24,9 @@ jobs:
       - name: Run Postman tests (Newman)
         env:
           POSTMAN_COLLECTION_NAME: ${{ secrets.POSTMAN_COLLECTION_NAME }}
-          POSTMAN_EXPORT_PATH: ${{ secrets.POSTMAN_EXPORT_PATH }}
+          POSTMAN_COLLECTION_EXPORT_PATH: ${{ secrets.POSTMAN_COLLECTION_EXPORT_PATH }}
+          POSTMAN_ENVIRONMENT_NAME: ${{ secrets.POSTMAN_ENVIRONMENT_NAME }}
+          POSTMAN_ENVIRONMENT_EXPORT_PATH: ${{ secrets.POSTMAN_ENVIRONMENT_EXPORT_PATH }}
           REPORT_DIR: ${{ secrets.REPORT_DIR }}
 
         run: npm run pm:test
